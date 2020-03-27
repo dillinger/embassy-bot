@@ -5,14 +5,8 @@ const { execute } = require("./components/cron-germany");
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
-bot.use(new LocalSession({ database: "session_db.json" }).middleware());
-
-bot.use((ctx, next) => {
-  ctx.session.subscription = ctx.session.subscription || false;
-  return next();
-});
-
 bot.context.cron = {
+  subscription: false,
   job: null,
   execute
 };
@@ -32,15 +26,6 @@ bot.command("embassy_of_germany_start", ctx => {
 bot.command("embassy_of_germany_stop", ctx => {
   ctx.cron.execute(ctx, "stop");
 });
-
-// process.on("SIGINT", code => {
-//   console.log("Process exit event with code: ", code);
-//   fs.writeFile("session_db.json", "", err => {
-//     if (err) console.log("Cannt write into file: session_db.json");
-//     console.log("Session reset successfuly.");
-//   });
-//   process.exit(1);
-// });
 
 exports.handler = async event => {
   try {
