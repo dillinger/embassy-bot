@@ -1,9 +1,7 @@
 const { newCronJob } = require("../components/cron-germany");
 
 module.exports = async ctx => {
-  ctx.cron.job = !ctx.context.cron.isSubscribed
-    ? newCronJob(ctx)
-    : ctx.cron.job;
+  ctx.cron.job = !ctx.cron.isSubscribed ? newCronJob(ctx) : ctx.cron.job;
   ctx.reply(`Welcome! Please choose a subscription:
 
     /embassy_of_germany_start - Subscribe to news from kiew.diplo.de

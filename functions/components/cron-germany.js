@@ -55,8 +55,8 @@ const newCronJob = ctx =>
 
 const execute = (ctx, action) => {
   if (action === "start") {
-    if (!ctx.context.cron.isSubscribed) {
-      ctx.context.cron.isSubscribed = true;
+    if (!ctx.cron.isSubscribed) {
+      ctx.cron.isSubscribed = true;
 
       ctx.cron.job.start();
 
