@@ -1,5 +1,5 @@
 const CronJob = require("cron").CronJob;
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 
 const CRONT_TIME = "00 08-17 * * 1-5";
 // const CRONT_TIME = "* * * * *";
