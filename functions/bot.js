@@ -5,7 +5,7 @@ const { execute } = require("./components/cron-germany");
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.context.cron = {
-  subscription: false,
+  isSubscribed: false,
   job: null,
   execute
 };
