@@ -1,5 +1,4 @@
 const Telegraf = require("telegraf");
-const LocalSession = require("telegraf-session-local");
 const startAction = require("./actions/start");
 const { execute } = require("./components/cron-germany");
 
