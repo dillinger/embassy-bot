@@ -1,0 +1,22 @@
+{
+  "name": "tbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "netlify-lambda install",
+    "dev": "node ./functions/bot.js",
+    "build": "netlify-lambda build src/functions",
+    "serve-lambda": "netlify-lambda serve src/functions"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^1.8.2",
+    "puppeteer": "^2.1.1",
+    "telegraf": "^3.36.0",
+    "telegraf-session-local": "^1.0.2"
+  }
+}
