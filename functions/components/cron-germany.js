@@ -54,20 +54,23 @@ const newCronJob = ctx =>
   );
 
 const execute = (ctx, action) => {
-  if (action === "start") {
-    if (!ctx.cron.isSubscribed) {
-      ctx.cron.isSubscribed = true;
+  const { cron } = ctx.state;
 
-      ctx.cron.job.start();
+  if (action === "start") {
+    console.log("EXECUTE ->", ctx.state);
+    if (!cron.isSubscribed) {
+      cron.isSubscribed = true;
+
+      cron.job.start();
 
       ctx.reply(
-        `⚠️ You have successfully subscribed to the news. Next update will be ${ctx.cron.job
+        `⚠️ You have successfully subscribed to the news. Next update will be ${cron.job
           .nextDates()
           .fromNow()}`
       );
     } else {
       ctx.reply(
-        `⚠️ You are alredy subscribed. Next update will be ${ctx.cron.job
+        `⚠️ You are alredy subscribed. Next update will be ${cron.job
           .nextDates()
           .fromNow()}`
       );
@@ -75,7 +78,7 @@ const execute = (ctx, action) => {
   }
 
   if (action === "stop") {
-    ctx.cron.job.stop();
+    cron.job.stop();
   }
 };
 
