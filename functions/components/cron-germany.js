@@ -49,7 +49,7 @@ function registerTasks(ctx) {
 
 async function getLastNewsFromEmbassy() {
   try {
-    const option = await getOption(true);
+    const option = await getOption(false);
 
     const browser = await puppeteer.launch(option);
     const page = await browser.newPage();
