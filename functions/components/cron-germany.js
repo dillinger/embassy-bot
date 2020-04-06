@@ -48,40 +48,34 @@ function registerTasks(ctx) {
 }
 
 async function getLastNewsFromEmbassy() {
-  const option = await getOption(false);
+  try {
+    const option = await getOption(true);
 
-  const browser = await puppeteer.launch(option);
-  const page = await browser.newPage();
-  // await page.setViewport({
-  //   width: 720,
-  //   height: 1280,
-  //   deviceScaleFactor: 1
-  // });
+    const browser = await puppeteer.launch(option);
+    const page = await browser.newPage();
 
-  await page.goto(EMBASSY_NEWS_PAGE_URL);
-  // await page.screenshot({ path: EMBASSY_SCREENSHOT_FILE });
+    await page.goto(EMBASSY_NEWS_PAGE_URL);
+    // await page.screenshot({ path: EMBASSY_SCREENSHOT_FILE });
 
-  const links = await page.$$eval(".c-teaser--big a", (resultsSelector) => {
-    const anchors = Array.from(
-      document.querySelectorAll(
-        '.u-section.isnt-margintop [data-css="c-teaser"] a'
-      )
-    );
-    return anchors.map((anchor) => anchor.getAttribute("title"));
-  });
+    const links = await page.$$eval(".c-teaser--big a", (resultsSelector) => {
+      const anchors = Array.from(
+        document.querySelectorAll(
+          '.u-section.isnt-margintop [data-css="c-teaser"] a'
+        )
+      );
+      return anchors.map((anchor) => anchor.getAttribute("title"));
+    });
 
-  await browser.close();
-  return links;
+    await browser.close();
+    return links;
+  } catch {
+    console.log("Somthing whent wrong width Puppeteer...");
+  }
 }
 
 const crontTickFn = (ctx) => async () => {
   const r = await getLastNewsFromEmbassy();
-  ctx.reply(
-    r.map((x) => `→ ${x}`).join(" \n\n"),
-    Markup.inlineKeyboard([
-      Markup.callbackButton("❌ Unsubscribe", "embassy_of_germany_stop"),
-    ]).extra()
-  );
+  ctx.reply(r.map((x) => `→ ${x}`).join(" \n\n"));
 };
 
 const cronTerminateFn = (ctx) => () => {
