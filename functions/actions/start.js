@@ -1,9 +1,18 @@
-const { newCronJob } = require("../components/cron-germany");
+"use strict";
 
-module.exports = async ctx => {
-  ctx.reply(`Welcome! Please choose a subscription:
+const Composer = require("telegraf/composer");
+const composer = new Composer();
+const Markup = require("telegraf/markup");
 
-    /embassy_of_germany_start - Subscribe to news from kiew.diplo.de
-    /embassy_of_germany_stop - Unsubscribe from kiew.diplo.de
-  `);
+composer.start(async (ctx) => {
+  return ctx.reply(
+    "Welcome! Please choose a subscription:",
+    Markup.inlineKeyboard([
+      Markup.callbackButton("🇩🇪 Embassy", "embassy_of_germany_start"),
+    ]).extra()
+  );
+});
+
+module.exports = (bot) => {
+  bot.use(composer.middleware());
 };
