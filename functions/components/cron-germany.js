@@ -92,7 +92,7 @@ const cronTerminateFn = (ctx) => () => {
       Markup.callbackButton("🇩🇪 Embassy", "embassy_of_germany_start"),
     ]).extra()
   );
-  ctx.answerCbQuery("❌ Your subscription terminated");
+  return ctx.answerCbQuery("❌ Your subscription terminated");
 };
 
 composer.action("embassy_of_germany_start", async (ctx) => {
@@ -114,7 +114,7 @@ composer.action("embassy_of_germany_start", async (ctx) => {
       ]).extra()
     );
 
-    ctx.answerCbQuery(
+    return ctx.answerCbQuery(
       `⚠️ You have successfully subscribed to the news. Next update will be ${allSubscription[
         chatId
       ]
@@ -122,7 +122,7 @@ composer.action("embassy_of_germany_start", async (ctx) => {
         .fromNow()}`
     );
   } else {
-    ctx.answerCbQuery(
+    return ctx.answerCbQuery(
       `⚠️ You are alredy subscribed. Next update will be ${allSubscription[
         chatId
       ]
@@ -136,7 +136,7 @@ composer.action("embassy_of_germany_stop", async (ctx) => {
   const chatId = ctx.chat.id;
 
   if (!allSubscription[chatId]) {
-    ctx.answerCbQuery(
+    return ctx.answerCbQuery(
       `There are no any active subscription with that ID ${chatId}`
     );
   }
